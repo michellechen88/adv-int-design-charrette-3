@@ -123,6 +123,9 @@
     <!-- blurry image becomes clear as page loads -->
     <div class="page" id="page-3" style="display: none;">
         <div class="content-container">
+            <div class="image-wrapper">
+                <img src="photos/IMG_4835.JPG">
+            </div>
             <div class="nav-btn-wrapper">
                 <button type="button" class="btn btn-outline-secondary" onclick="navigateToPage(2)">Prev</button>
                 <button type="button" class="btn btn-outline-secondary" onclick="navigateToPage(4)">Next</button>
@@ -302,40 +305,44 @@
 
     <!-- navigation button script -->
     <script>
-        function navigateToPage(pageNum) {
-            document.querySelectorAll(".page").forEach(page => {
-                page.style.display = "none";
-            });
-            document.getElementById(pageNum).style.display = "block";
-        }
-        document.addEventListener("DOMContentLoaded", function () {
+       function navigateToPage(pageNum) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.style.display = "none";
+    });
+    document.getElementById("page-" + pageNum).style.display = "block";
+}
+
+// Ensure this script is only executed after the DOM has fully loaded
+document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".btn-group .btn");
 
     buttons.forEach(button => {
         button.addEventListener("click", function () {
-            const pageNum = this.textContent;
+            const pageNum = this.textContent; // Number is text, no need for # in querySelector
             document.querySelectorAll(".page").forEach(page => {
                 page.style.display = "none";
             });
 
-            const activePage = document.getElementById(`page-${pageNum}`);
+            const activePage = document.getElementById("page-" + pageNum);
             activePage.style.display = "block";
 
+            // Hide the spinner and show the image on page 1
             if (pageNum === "1") {
                 const imageWrapper = activePage.querySelector(".image-wrapper");
                 const spinner = activePage.querySelector(".spinner-border");
 
-                imageWrapper.style.display = "none"; // Hide the image initially
+                imageWrapper.style.display = "none"; // Hide image initially
                 spinner.style.display = "block"; // Show the spinner
 
                 setTimeout(() => {
-                    spinner.style.display = "none"; // Hide spinner after 5 sec
-                    imageWrapper.style.display = "block"; // Show image after 5 sec
+                    spinner.style.display = "none"; // Hide spinner after 3 seconds
+                    imageWrapper.style.display = "block"; // Show image
                 }, 3000);
             }
         });
     });
 });
+
     </script>
 </body>
 </html>
