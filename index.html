@@ -133,9 +133,12 @@
         </div>
     </div>
 
-    <!-- img broken into grid, each box in grid clears up as page loads -->
+    <!-- hover to show image in color -->
     <div class="page" id="page-4" style="display: none;">
         <div class="content-container">
+            <div class="image-wrapper">
+                <img src="photos/IMG_4911.JPG">
+            </div>
             <div class="nav-btn-wrapper">
                 <button type="button" class="btn btn-outline-secondary" onclick="navigateToPage(3)">Prev</button>
                 <button type="button" class="btn btn-outline-secondary" onclick="navigateToPage(5)">Next</button>
@@ -312,6 +315,21 @@
     document.getElementById("page-" + pageNum).style.display = "block";
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const image = document.querySelector("#page-4 .image-wrapper img");
+
+    image.addEventListener("mouseenter", function() {
+        // Remove grayscale after hover
+        image.style.filter = "grayscale(0%)";
+    });
+
+    image.addEventListener("transitionend", function() {
+        // Ensure the image stays in color after hover
+        if (image.style.filter === "grayscale(0%)") {
+            image.removeEventListener("mouseenter", arguments.callee); // Stop listening after it turns to color
+        }
+    });
+});
 // Ensure this script is only executed after the DOM has fully loaded
 document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".btn-group .btn");
